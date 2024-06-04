@@ -1,0 +1,10 @@
+{{day}}
+{{month}}
+{{year}}
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  @for (event of events; track event) {
+  <div class="example-box" cdkDrag>{{event.title}} <p>{{event.startDate}}</p>
+    <p>{{event.endDate}}</p>
+  </div>
+  }
+</div>

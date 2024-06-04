@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Create Event</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required>
+      @if (form.get('title')?.invalid) {
+      <mat-error>You must enter a title for the event</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Start Date</mat-label>
+      <input matInput type="datetime-local" formControlName="startDate" required>
+      @if (form.get('startDate')?.invalid) {
+      <mat-error>You must enter a start date for the event</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>End Date</mat-label>
+      <input matInput type="datetime-local" formControlName="endDate" required>
+      @if (form.get('endDate')?.invalid) {
+      <mat-error>You must enter a end date for the event</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [disabled]="form.invalid" (click)="submit()" cdkFocusInitial>Create</button>
+</mat-dialog-actions>
