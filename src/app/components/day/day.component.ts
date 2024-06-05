@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
+import { IEvent } from '../../interfaces/event.interface';
+import { SignalsService } from '../../services/signals.service';
 
 @Component({
   selector: 'app-day',
@@ -15,10 +17,11 @@ export class DayComponent {
   day = '';
   month = '';
   year = '';
-  events = [
-    { title: 'qwe', startDate: '2024-01-01T01:00', endDate: '2024-01-01T13:00' }
-  ];
-  constructor(private route: ActivatedRoute) { }
+  events: IEvent[] | undefined;
+  constructor(
+    private route: ActivatedRoute,
+    private signalsService: SignalsService
+  ) { }
 
 
 
@@ -27,11 +30,15 @@ export class DayComponent {
       this.day = params['day'];
       this.month = params['month'];
       this.year = params['year'];
+      const date = `${this.day}-${Number(this.month) - 1}-${this.year}`;
+      this.events = computed(() => this.signalsService.eventsSignal()!.find(i => i.startDate.includes(date)));
     });
   }
 
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.events, event.previousIndex, event.currentIndex);
+    if (this.events && this.events.length) {
+      moveItemInArray(this.events, event.previousIndex, event.currentIndex);
+    }
   }
 }
