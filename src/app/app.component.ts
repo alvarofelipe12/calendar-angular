@@ -7,11 +7,21 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { SignalsService } from './services/signals.service';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 @Component({
   selector: 'app-root',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [RouterOutlet, MatIconModule, MatCardModule, MatDatepickerModule, MatDialogModule],
+  providers: [provideNativeDateAdapter(), DatePipe],
+  imports: [
+    RouterOutlet,
+    MatIconModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    CommonModule,
+    MatGridListModule
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

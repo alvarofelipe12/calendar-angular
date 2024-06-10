@@ -7,10 +7,8 @@ import { IEvent } from '../interfaces/event.interface';
 export class SignalsService {
 
   eventsSignal = signal<IEvent[] | undefined>([
-    { title: 'qwe', startDate: '2024-01-01T01:00', endDate: '2024-01-01T13:00' }
+    { title: 'qwe', startDate: '2024-06-10T01:00', endDate: '2024-06-10T13:00' }
   ]);
-
-  // readonly events = this.eventsSignal.asReadonly();
 
   constructor() { }
 
@@ -20,7 +18,7 @@ export class SignalsService {
 
   removeEvent(eventTitle: string) {
     this.eventsSignal.update(evts => {
-      return evts!.filter(i => i.title !== eventTitle);
+      return [...evts!.filter(i => i.title !== eventTitle)];
     });
   }
 }

@@ -1,15 +1,17 @@
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
 import { IEvent } from '../../interfaces/event.interface';
 import { SignalsService } from '../../services/signals.service';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-day',
   standalone: true,
-  imports: [CdkDropList, CdkDrag],
+  imports: [CdkDropList, CdkDrag, MatIconModule, CommonModule, MatGridListModule],
+  providers: [DatePipe],
   templateUrl: './day.component.html',
   styleUrl: './day.component.scss'
 })
@@ -30,8 +32,10 @@ export class DayComponent {
       this.day = params['day'];
       this.month = params['month'];
       this.year = params['year'];
-      const date = `${this.day}-${Number(this.month) - 1}-${this.year}`;
-      this.events = computed(() => this.signalsService.eventsSignal()!.find(i => i.startDate.includes(date)));
+      const date = new Date(`${this.year}-${this.month}-${this.day}`);
+      this.events = this.signalsService.eventsSignal()!.filter(
+        i => this.sameDay(new Date(i.startDate), date) || this.sameDay(new Date(i.endDate), date)
+      );
     });
   }
 
@@ -40,5 +44,15 @@ export class DayComponent {
     if (this.events && this.events.length) {
       moveItemInArray(this.events, event.previousIndex, event.currentIndex);
     }
+  }
+
+  sameDay(d1: Date, d2: Date): boolean {
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
+  }
+
+  delete(title: string) {
+    this.signalsService.removeEvent(title);
   }
 }

@@ -1,5 +1,36 @@
 <header>
-  Calendar
+  <mat-grid-list cols="3" rowHeight="65px">
+    <mat-grid-tile>
+      <div class="align-left">
+        <button mat-fab extended color="primary">
+         <mat-icon>menu</mat-icon>
+        </button>Calendar
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile><div class="align-left">{{ selected | date }}</div></mat-grid-tile>
+    <mat-grid-tile>
+      <div class="align-left">
+        <button mat-fab extended color="primary">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-fab extended color="primary">
+          <mat-icon>help</mat-icon>
+        </button>
+        <button mat-fab extended color="primary">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-fab extended color="primary">
+          <mat-icon>event</mat-icon>
+        </button>
+        <button mat-fab extended color="primary">
+          <mat-icon>task_alt</mat-icon>
+        </button>
+        <button mat-fab extended color="primary">
+          <mat-icon>apps</mat-icon>
+        </button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
 </header>
 <main class="main">
   <div>
@@ -11,12 +42,10 @@
     <mat-card class="calendar-card">
       <mat-calendar [(selected)]="selected" (selectedChange)="onSelect($event)"></mat-calendar>
     </mat-card>
-    <p>Selected date: {{selected}}</p>
   </div>
   <div>
   </div>
   <div>
-    router
     <router-outlet />
   </div>
 </main>

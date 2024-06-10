@@ -1,3 +1,11 @@
+header {
+  .align-left {
+    position: absolute;
+    left: 0;
+    padding-left: 8px;
+  }
+}
+
 main {
   width: 100%;
   display: flex;

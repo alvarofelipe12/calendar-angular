@@ -1,11 +1,15 @@
-<!-- {{day}}
-{{month}}
-{{year}} -->
 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
   @if(events && events.length){
     @for (event of events; track event) {
-    <div class="example-box" cdkDrag>{{event.title}} <p>{{event.startDate}}</p>
-      <p>{{event.endDate}}</p>
+    <div class="example-box" cdkDrag>
+      <mat-grid-list cols="3" rowHeight="2:1">
+        <mat-grid-tile>{{event.title}}</mat-grid-tile>
+        <mat-grid-tile>{{event.startDate | date:'shortTime'}}</mat-grid-tile>
+        <mat-grid-tile>{{event.endDate| date:'shortTime'}}</mat-grid-tile>
+      </mat-grid-list>
+      <button mat-icon-button (click)="delete(event.title)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
     }
   }
